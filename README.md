@@ -29,3 +29,6 @@ The center of mass of a molecule is a 3-item array where each component
 is the average of all x, y, and z coordinates for all atoms in the molecule.
 In short, to calculate the center of mass, you have to sum all values of x
 and divide by the number of atoms in the molecule, same for y, and same for z.
+
+# Web Page
+The web page is hosted on github: https://joaorodrigues.github.io/molcom-js/
