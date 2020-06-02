@@ -15,6 +15,9 @@ function displayOnPage(content) {
 // Downloads data from a website.
 // Request is asynchronous: browser keeps waiting until all data is fetched
 // and then it triggers the callback function
+
+let mypdb;
+
 function downloadMolecule(code) {
   
   var xhttp = new XMLHttpRequest();
@@ -22,48 +25,9 @@ function downloadMolecule(code) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         // callback function here
-        displayOnPage(this.responseText);
+        let result = calculateCenterOfMass(this.responseText)
+        displayOnPage(result);
         
-        let mypdb = this.responseText;
-        let array = mypdb.split("\n");
-        let x_array = []
-        let y_array = []
-        let z_array = []
-        //console.log(array[1]);
-        for (let counter=0; counter <= array.length; counter += 1) {
-            //console.log(array[counter]);
-            if (typeof(array[counter]) != "undefined" && array[counter].startsWith("ATOM")) {
-              x_array.push(array[counter].slice(30, 38))
-              y_array.push(array[counter].slice(38, 46))
-              z_array.push(array[counter].slice(46, 54))
-            }
-            
-        }
-        // console.log(x_array);
-        // console.log(y_array);
-        // console.log(z_array);
-
-
-        xyz_avg = function(array) {
-          let total = 0
-          for (let i = 0; i < array.length; i++) {
-            let newnumber = Number(array[i])
-            total += newnumber;
-         }
-          let av = total / array.length
-          return(av);
-        }
-
-        console.log("X:" + xyz_avg(x_array))
-        console.log("Y:" + xyz_avg(y_array))
-        console.log("Z:" + xyz_avg(z_array))
-        // let total = 0
-        // for (let i = 0; i < x_array.length; i++) {
-        //   let newnumber = Number(x_array[i])
-        //   total += newnumber;
-        // }
-        // let av = total / x_array.length
-        // console.log(av);
     }
   };
 
@@ -79,3 +43,40 @@ function run() {
 
     downloadMolecule(pdbcode);
 }
+
+calculateCenterOfMass = function(pdbfile){
+  let array = pdbfile.split("\n");
+  let x_array = []
+  let y_array = []
+  let z_array = []
+
+  for (let counter=0; counter <= array.length; counter += 1) {
+    
+    if (typeof(array[counter]) != "undefined" && array[counter].startsWith("ATOM")) {
+      x_array.push(array[counter].slice(30, 38))
+      y_array.push(array[counter].slice(38, 46))
+      z_array.push(array[counter].slice(46, 54))
+    }
+    
+  }
+
+  let final_x = "X:" + xyz_avg(x_array)
+  let final_y = "Y:" + xyz_avg(y_array)
+  let final_z = "Z:" + xyz_avg(z_array)
+
+  return final_x + ", " + final_y + ", " + final_z
+
+}
+
+xyz_avg = function(array) {
+  let total = 0
+  for (let i = 0; i < array.length; i++) {
+    let newnumber = Number(array[i])
+    total += newnumber;
+  }
+  let av = total / array.length
+  return av
+}
+
+        
+      
