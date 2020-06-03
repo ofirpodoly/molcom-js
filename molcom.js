@@ -50,11 +50,15 @@ function calculateCenterOfMass(pdbfile) {
       z_array.push(array[counter].slice(46, 54))
     }
   }
-  let final_x = "X:" + xyz_avg(x_array)
-  let final_y = "Y:" + xyz_avg(y_array)
-  let final_z = "Z:" + xyz_avg(z_array)
+  let final_x = xyz_avg(x_array)
+  let final_y = xyz_avg(y_array)
+  let final_z = xyz_avg(z_array)
+  let final_x_rounded = final_x.toFixed(3)
+  let final_y_rounded = final_y.toFixed(3)
+  let final_z_rounded = final_z.toFixed(3)
 
-  return final_x + ", " + final_y + ", " + final_z
+  return "X:" + final_x_rounded + ", " + "Y:"
+  + final_y_rounded + ", " + "Z:" + final_z_rounded
 }
 function xyz_avg(array) {
   let total = 0
