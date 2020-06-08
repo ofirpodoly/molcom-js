@@ -43,8 +43,8 @@ function calculateCenterOfMass(pdbfile) {
   let z_array = [];
 
   for (let counter=0; counter <= array.length; counter += 1) {
-    if (typeof(array[counter]) != "undefined" &&
-    array[counter].startsWith("ATOM")) {
+    if (typeof(array[counter]) != "undefined" 
+    && array[counter].startsWith("ATOM") && !Number.isNaN(array[counter])) {
       x_array.push(array[counter].slice(30, 38))
       y_array.push(array[counter].slice(38, 46))
       z_array.push(array[counter].slice(46, 54))
